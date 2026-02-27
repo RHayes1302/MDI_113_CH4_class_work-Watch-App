@@ -93,4 +93,3 @@ class MotionViewModelAsync: ObservableObject {
         motionManager.stopDeviceMotionUpdates()
     }
 }
-
