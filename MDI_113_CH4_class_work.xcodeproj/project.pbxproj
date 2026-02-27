@@ -39,9 +39,22 @@
 		BCE63ED52F4A26A900BD00E2 /* MDI_113_CH4_class_work Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MDI_113_CH4_class_work Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9957C6792F51407200D0340D /* Exceptions for "MDI_113_CH4_class_work Watch App" folder in "MDI_113_CH4_class_work Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"MDI-113-CH4-class-work-Watch-App-Info.plist",
+			);
+			target = BCE63ED42F4A26A900BD00E2 /* MDI_113_CH4_class_work Watch App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BCE63ED92F4A26A900BD00E2 /* MDI_113_CH4_class_work Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9957C6792F51407200D0340D /* Exceptions for "MDI_113_CH4_class_work Watch App" folder in "MDI_113_CH4_class_work Watch App" target */,
+			);
 			path = "MDI_113_CH4_class_work Watch App";
 			sourceTree = "<group>";
 		};
@@ -314,12 +327,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MDI_113_CH4_class_work Watch App/MDI_113_CH4_class_work Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 33PDVR6SVF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MDI-113-CH4-class-work-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = MDI_113_CH4_class_work;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Required to access Health share ";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Motion data is used for testing purposes";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
@@ -344,12 +360,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MDI_113_CH4_class_work Watch App/MDI_113_CH4_class_work Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 33PDVR6SVF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MDI-113-CH4-class-work-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = MDI_113_CH4_class_work;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Required to access Health share ";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Motion data is used for testing purposes";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;

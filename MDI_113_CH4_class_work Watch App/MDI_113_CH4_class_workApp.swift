@@ -2,7 +2,7 @@
 //  MDI_113_CH4_class_workApp.swift
 //  MDI_113_CH4_class_work Watch App
 //
-//  Created by Ramses Garcia on 21/02/26.
+//  Created by Ramone Hayes on 21/02/26.
 //
 
 import SwiftUI

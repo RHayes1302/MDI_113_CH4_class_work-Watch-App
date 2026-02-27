@@ -1,3 +1,9 @@
+
+
+
+
+
+
 import SwiftUI
 
 struct MotionDataRow: View {
