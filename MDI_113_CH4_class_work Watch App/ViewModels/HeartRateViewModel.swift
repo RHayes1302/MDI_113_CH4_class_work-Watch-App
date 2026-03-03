@@ -11,7 +11,7 @@ import Combine
 
 class HeartRateViewModel: ObservableObject {
     // MARK: - Published Properties
-    @Published var currentHeartRate: Int = 0
+    @Published var currentHearthRate: Int = 0
     @Published var isMonitoring: Bool = false
     @Published var errorMessage: String?
     @Published var authorizationStatus: String = "Not Determined"
@@ -21,7 +21,7 @@ class HeartRateViewModel: ObservableObject {
     private var heartRateQuery: HKQuery?
     
     private let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-    private let heartRateUnit = HKUnit.count().unitDivided(by: .minute())
+    private let heartRateUnit = HKUnit.count().unitDivided(by: .minute()) // count is the quantity value divided by minute (Beats Per Minute BPMs)
     
     init() {
         checkAuthorizationStatus()
@@ -31,10 +31,10 @@ class HeartRateViewModel: ObservableObject {
         stopMonitoring()
     }
     
-    // MARK: - Auth
+    //MARK: - Auth
     private func checkAuthorizationStatus() {
         guard HKHealthStore.isHealthDataAvailable() else {
-            errorMessage = "HealthKit is not available"
+            errorMessage = "health kit is not available"
             return
         }
         
@@ -42,80 +42,78 @@ class HeartRateViewModel: ObservableObject {
         
         switch status {
         case .notDetermined:
-            authorizationStatus = "Not Determined"
+            self.authorizationStatus = "Not Determined"
         case .sharingDenied:
-            authorizationStatus = "Denied"
-            errorMessage = "Please enable heart rate in settings to access this feature"
+            self.authorizationStatus = "Denied"
+            errorMessage = "Pleas enable heart rate in settings to access this feature"
         case .sharingAuthorized:
-            authorizationStatus = "Authorized"
+            self.authorizationStatus = "Authorized"
         @unknown default:
-            authorizationStatus = "Unknown"
+            self.authorizationStatus = "Unknown"
         }
     }
     
     func requestAuthorization() {
         guard HKHealthStore.isHealthDataAvailable() else {
-            errorMessage = "HealthKit is not available"
+            errorMessage = "health kit is not available"
             return
         }
         
         healthStore.requestAuthorization(toShare: nil, read: [heartRateType]) { [weak self] success, error in
+            guard let self = self else { return }
+            
             DispatchQueue.main.async {
                 if success {
-                    self?.authorizationStatus = "Authorized"
-                    self?.errorMessage = nil
-                    self?.startMonitoringHeartRate() // FIX: auto-start after authorization
+                    self.authorizationStatus = "Authorized"
+                    self.errorMessage = nil
                 } else {
-                    self?.errorMessage = "Authorization Failed"
+                    self.errorMessage = "Authorization Failed"
                 }
             }
         }
     }
     
     // MARK: - Public Methods
-    func startMonitoringHeartRate() {
+    func startMonitorinHeartRate() {
         guard HKHealthStore.isHealthDataAvailable() else {
-            errorMessage = "HealthKit is not available"
+            errorMessage = "health kit is not available"
             return
-        }
-        
-        // Shared handler used for both initial fetch and live updates
-        let handler: (HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void = { [weak self] _, samples, _, _, error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Error: \(error.localizedDescription)"
-                }
-                return
-            }
-            
-            guard let samples = samples as? [HKQuantitySample], let sample = samples.last else { return }
-            
-            let heartRate = sample.quantity.doubleValue(for: self.heartRateUnit)
-            
-            DispatchQueue.main.async {
-                self.currentHeartRate = Int(heartRate)
-                self.errorMessage = nil
-            }
         }
         
         let query = HKAnchoredObjectQuery(
             type: heartRateType,
             predicate: nil,
             anchor: nil,
-            limit: HKObjectQueryNoLimit,
-            resultsHandler: handler
-        )
+            limit: HKObjectQueryNoLimit
+        ) { [weak self] query, samples, deletedObjects, anchor, error in
+            self?.processSamples(samples: samples, error: error)
+        }
         
-        // FIX: updateHandler fires every time a new heart rate sample arrives
-        query.updateHandler = handler
+        query.updateHandler = { [weak self] query, samples, deletedObjects, anchor, error in
+            self?.processSamples(samples: samples, error: error)
+        }
         
         heartRateQuery = query
         healthStore.execute(query)
+        isMonitoring = true
+    }
+    
+    private func processSamples(samples: [HKSample]?, error: Error?) {
+        guard let samples = samples as? [HKQuantitySample], let sample = samples.last else {
+            
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.errorMessage = "Error while getting the samples"
+                }
+            }
+            return
+        }
+        
+        let heartRate = sample.quantity.doubleValue(for: self.heartRateUnit) // double represented in bpms
         
         DispatchQueue.main.async {
-            self.isMonitoring = true
+            self.currentHearthRate = Int(heartRate)
+            self.errorMessage = nil
         }
     }
     
@@ -124,6 +122,7 @@ class HeartRateViewModel: ObservableObject {
             healthStore.stop(query)
             heartRateQuery = nil
         }
+        
         isMonitoring = false
     }
 }
